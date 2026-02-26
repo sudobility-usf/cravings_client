@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/cravings_client",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Client library for Starter API with TanStack Query hooks",
   "type": "module",
   "main": "dist/index.js",
