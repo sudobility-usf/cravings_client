@@ -41,6 +41,18 @@ export const DEFAULT_GC_TIME = 30 * 60 * 1000;
  * queryClient.prefetchQuery({ queryKey: QUERY_KEYS.historiesTotal() });
  * ```
  */
+/**
+ * A restaurant result returned from the search endpoint.
+ */
+export interface Restaurant {
+  /** Display name of the restaurant */
+  name: string;
+  /** Street address of the restaurant */
+  address: string;
+  /** Distance from the search location */
+  distance: string;
+}
+
 export const QUERY_KEYS = {
   /** Cache key for a user's history list. */
   histories: (userId: string) => ['starter', 'histories', userId] as const,
@@ -48,4 +60,7 @@ export const QUERY_KEYS = {
   historiesTotal: () => ['starter', 'histories', 'total'] as const,
   /** Cache key for a user profile. */
   user: (userId: string) => ['starter', 'user', userId] as const,
+  /** Cache key for a restaurant search result (keyed by location + dish). */
+  restaurantSearch: (location: string, dish: string) =>
+    ['cravings', 'restaurant-search', location, dish] as const,
 } as const;

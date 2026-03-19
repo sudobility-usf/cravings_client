@@ -7,6 +7,7 @@ import type {
   HistoryUpdateRequest,
   User,
 } from '@sudobility/cravings_types';
+import type { Restaurant } from '../types';
 import type { FirebaseIdToken } from '../types';
 import {
   buildUrl,
@@ -232,6 +233,31 @@ export class StarterClient {
       headers: createAuthHeaders(token),
     });
     return validateResponse<void>(response.data, 'deleteHistory');
+  }
+
+  // --- Restaurant Search (public) ---
+
+  /**
+   * Searches for restaurants by location and dish.
+   *
+   * This is a public endpoint that does not require authentication.
+   *
+   * @param location - The location to search near (e.g., "San Francisco")
+   * @param dish - The dish to search for (e.g., "tacos")
+   * @returns A list of matching restaurants wrapped in a {@link BaseResponse}
+   * @throws {Error} If the response does not match the expected shape
+   */
+  async searchRestaurants(
+    location: string,
+    dish: string
+  ): Promise<BaseResponse<Restaurant[]>> {
+    const url = buildUrl(this.baseUrl, '/api/v1/search');
+    const response = await this.networkClient.post(
+      url,
+      { location, dish },
+      { headers: createHeaders() }
+    );
+    return validateResponse<Restaurant[]>(response.data, 'searchRestaurants');
   }
 
   // --- Total (public) ---
